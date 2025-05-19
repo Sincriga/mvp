@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KaziKonect - Product Requirements Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #10b981 100%);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .timeline-item:not(:last-child):after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 32px;
+            height: calc(100% - 32px);
+            width: 2px;
+            background: #e2e8f0;
+        }
+        
+        .toggle-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .toggle-content.expanded {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+        
+        .nav-pill {
+            position: relative;
+        }
+        
+        .nav-pill:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #4f46e5;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-pill:hover:after {
+            width: 100%;
+        }
+        
+        .nav-pill.active:after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="gradient-bg text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg p-2 mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold">KaziKonect</h1>
+                        <p class="text-indigo-100">AI-Powered Skilled Labor Marketplace for Kenya</p>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                        <span class="text-sm font-medium">PRD Version 1.0</span>
+                        <span class="text-xs bg-white text-indigo-600 px-2 py-1 rounded-full">Latest</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12">
+                <h2 class="text-4xl font-bold mb-4">Product Requirements Document</h2>
+                <p class="text-xl max-w-3xl mb-8">Connecting skilled Kenyan workers with clients through AI-driven matching, verified profiles, and secure payments.</p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <div class="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2 flex items-center">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span>Prepared: <span id="current-date" class="font-medium"></span></span>
+                    </div>
+                    <div class="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2 flex items-center">
+                        <i class="fas fa-user-tie mr-2"></i>
+                        <span>Author: <span class="font-medium">Product Team</span></span>
+                    </div>
+                    <div class="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2 flex items-center">
+                        <i class="fas fa-bullseye mr-2"></i>
+                        <span>Status: <span class="font-medium">Draft for Review</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 bg-white shadow-sm z-10">
+        <div class="container mx-auto px-6">
+            <div class="flex overflow-x-auto py-4 space-x-8">
+                <a href="#overview" class="nav-pill whitespace-nowrap text-gray-600 hover:text-indigo-600 pb-2">Overview</a>
+                <a href="#objectives" class="nav-pill whitespace-nowrap text-gray-600 hover:text-indigo-600 pb-2">Objectives</a>
+                <a href="#features" class="nav-pill whitespace-nowrap text-gray-600 hover:text-indigo-600 pb-2">Features</a>
+                <a href="#tech" class="nav-pill whitespace-nowrap text-gray-600 hover:text-indigo-600 pb-2">Tech Specs</a>
+                <a href="#business" class="nav-pill whitespace-nowrap text-gray-600 hover:text-indigo-600 pb-2">Business</a>
+                <a href="#roadmap" class="nav-pill whitespace-nowrap text-gray-600 hover:text-indigo-600 pb-2">Roadmap</a>
+                <a href="#metrics" class="nav-pill whitespace-nowrap text-gray-600 hover:text-indigo-600 pb-2">Metrics</a>
+                <a href="#risks" class="nav-pill whitespace-nowrap text-gray-600 hover:text-indigo-600 pb-2">Risks</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        <!-- Document Overview -->
+        <section id="overview" class="mb-16 scroll-mt-20">
+            <div class="flex items-center mb-8">
+                <div class="h-1 bg-indigo-500 rounded-full w-12 mr-4"></div>
+                <h2 class="text-3xl font-bold text-gray-800">1. Document Overview</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="text-indigo-500 mb-4">
+                        <i class="fas fa-bullseye text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Purpose</h3>
+                    <p class="text-gray-600">This PRD outlines requirements for KaziKonect, a SaaS platform connecting skilled Kenyan workers with clients via AI-driven matching, verified profiles, and secure payments.</p>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="text-green-500 mb-4">
+                        <i class="fas fa-users text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Target Audience</h3>
+                    <ul class="text-gray-600 space-y-1">
+                        <li><i class="fas fa-user-cog mr-2 text-indigo-500"></i> Skilled Workers</li>
+                        <li><i class="fas fa-home mr-2 text-indigo-500"></i> Homeowners & SMEs</li>
+                        <li><i class="fas fa-hand-holding-usd mr-2 text-indigo-500"></i> Investors</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="text-purple-500 mb-4">
+                        <i class="fas fa-star text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Key Differentiators</h3>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-start">
+                            <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2 py-0.5 rounded">AI</span>
+                            <span>Smarter matching than competitors</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2 py-0.5 rounded">MPesa</span>
+                            <span>Secure escrow payments</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2 py-0.5 rounded">USSD</span>
+                            <span>Feature phone accessibility</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
+                <h3 class="text-xl font-semibold mb-4 text-indigo-800">Competitive Advantage</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-indigo-100">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-indigo-800 uppercase tracking-wider">Feature</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-indigo-800 uppercase tracking-wider">KaziKonect</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-indigo-800 uppercase tracking-wider">Competitor A</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-indigo-800 uppercase tracking-wider">Competitor B</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">AI Matching</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check-circle text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times-circle text-red-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times-circle text-red-500"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">USSD Access</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check-circle text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times-circle text-red-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check-circle text-green-500"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Escrow Payments</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check-circle text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check-circle text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times-circle text-red-500"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Objectives -->
+        <section id="objectives" class="mb-16 scroll-mt-20">
+            <div class="flex items-center mb-8">
+                <div class="h-1 bg-indigo-500 rounded-full w-12 mr-4"></div>
+                <h2 class="text-3xl font-bold text-gray-800">2. Product Objectives</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-md p-6 text-center">
+                    <div class="text-4xl font-bold text-indigo-600 mb-2">10,000+</div>
+                    <p class="text-gray-600">Workers onboarded in Year 1</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 text-center">
+                    <div class="text-4xl font-bold text-green-600 mb-2">50%</div>
+                    <p class="text-gray-600">Jobs booked via USSD/SMS</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 text-center">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">95%</div>
+                    <p class="text-gray-600">Verified workers</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 text-center">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">500K+</div>
+                    <p class="text-gray-600">KES monthly revenue by Year 1</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Objective</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Key Result</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Metric</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Target</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Market Penetration</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Onboard skilled workers</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Registered workers</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10,000+</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Accessibility</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Reach feature phone users</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">USSD/SMS bookings</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">50%</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Trust & Safety</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Verify worker credentials</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Verified profiles</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">95%</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Sustainability</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Generate revenue</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Monthly revenue</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">KES 500K+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Features & Requirements -->
+        <section id="features" class="mb-16 scroll-mt-20">
+            <div class="flex items-center mb-8">
+                <div class="h-1 bg-indigo-500 rounded-full w-12 mr-4"></div>
+                <h2 class="text-3xl font-bold text-gray-800">3. Features & Requirements</h2>
+            </div>
+            
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold mb-6 text-gray-700">3.1 Core Features</h3>
+                
+                <div class="space-y-6">
+                    <!-- Feature Accordion -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <button onclick="toggleFeature('feature1')" class="w-full flex justify-between items-center p-6 text-left">
+                            <div class="flex items-center">
+                                <div class="bg-indigo-100 p-2 rounded-lg mr-4">
+                                    <i class="fas fa-user-plus text-indigo-600"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold">Worker Onboarding</h4>
+                            </div>
+                            <i id="feature1-icon" class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div id="feature1" class="toggle-content px-6 pb-6">
+                            <div class="pl-16">
+                                <div class="mb-4">
+                                    <h5 class="font-medium text-gray-800 mb-2">WhatsApp/USSD Registration</h5>
+                                    <ul class="text-gray-600 space-y-1 pl-4">
+                                        <li><i class="fas fa-circle text-xs text-indigo-500 mr-2"></i> Collect: Name, skill, location, M-Pesa number</li>
+                                        <li><i class="fas fa-circle text-xs text-indigo-500 mr-2"></i> AI: Auto-categorize skills from voice notes (NLP)</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800 mb-2">Profile Verification</h5>
+                                    <ul class="text-gray-600 space-y-1 pl-4">
+                                        <li><i class="fas fa-circle text-xs text-indigo-500 mr-2"></i> ID scan (Jumio API)</li>
+                                        <li><i class="fas fa-circle text-xs text-indigo-500 mr-2"></i> Skills quiz (WhatsApp chatbot)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <button onclick="toggleFeature('feature2')" class="w-full flex justify-between items-center p-6 text-left">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 p-2 rounded-lg mr-4">
+                                    <i class="fas fa-briefcase text-green-600"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold">Client Job Posting</h4>
+                            </div>
+                            <i id="feature2-icon" class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div id="feature2" class="toggle-content px-6 pb-6">
+                            <div class="pl-16">
+                                <div class="mb-4">
+                                    <h5 class="font-medium text-gray-800 mb-2">Post Jobs via App/USSD</h5>
+                                    <ul class="text-gray-600 space-y-1 pl-4">
+                                        <li><i class="fas fa-circle text-xs text-green-500 mr-2"></i> Fields: Job type, budget, location, urgency</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800 mb-2">AI Suggestions</h5>
+                                    <ul class="text-gray-600 space-y-1 pl-4">
+                                        <li><i class="fas fa-circle text-xs text-green-500 mr-2"></i> Auto-complete job descriptions</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <button onclick="toggleFeature('feature3')" class="w-full flex justify-between items-center p-6 text-left">
+                            <div class="flex items-center">
+                                <div class="bg-purple-100 p-2 rounded-lg mr-4">
+                                    <i class="fas fa-robot text-purple-600"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold">AI Matching Engine</h4>
+                            </div>
+                            <i id="feature3-icon" class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div id="feature3" class="toggle-content px-6 pb-6">
+                            <div class="pl-16">
+                                <div class="mb-4">
+                                    <h5 class="font-medium text-gray-800 mb-2">Inputs</h5>
+                                    <ul class="text-gray-600 space-y-1 pl-4">
+                                        <li><i class="fas fa-circle text-xs text-purple-500 mr-2"></i> Job requirements</li>
+                                        <li><i class="fas fa-circle text-xs text-purple-500 mr-2"></i> Worker skills</li>
+                                        <li><i class="fas fa-circle text-xs text-purple-500 mr-2"></i> Location</li>
+                                        <li><i class="fas fa-circle text-xs text-purple-500 mr-2"></i> Ratings</li>
+                                    </ul>
+                                </div>
+                                <div class="mb-4">
+                                    <h5 class="font-medium text-gray-800 mb-2">Output</h5>
+                                    <ul class="text-gray-600 space-y-1 pl-4">
+                                        <li><i class="fas fa-circle text-xs text-purple-500 mr-2"></i> Ranked list of top 5 workers</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800 mb-2">Algorithm</h5>
+                                    <ul class="text-gray-600 space-y-1 pl-4">
+                                        <li><i class="fas fa-circle text-xs text-purple-500 mr-2"></i> Collaborative filtering + logistic regression</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-2xl font-semibold mb-6 text-gray-700">3.2 Advanced AI Features (Phase 2)</h3>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-xl shadow-md p-6 feature-card transition-all duration-300">
+                        <div class="bg-blue-100 p-3 rounded-lg inline-block mb-4">
+                            <i class="fas fa-bell text-blue-600 text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-2">Predictive Demand Alerts</h4>
+                        <p class="text-gray-600">SMS workers about service hotspots based on historical demand patterns.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6 feature-card transition-all duration-300">
+                        <div class="bg-yellow-100 p-3 rounded-lg inline-block mb-4">
+                            <i class="fas fa-microphone text-yellow-600 text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-2">Voice-Based Skills Verification</h4>
+                        <p class="text-gray-600">AI checks technical knowledge through voice responses to questions.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6 feature-card transition-all duration-300">
+                        <div class="bg-red-100 p-3 rounded-lg inline-block mb-4">
+                            <i class="fas fa-shield-alt text-red-600 text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-2">Fraud Detection</h4>
+                        <p class="text-gray-600">Flags fake profiles and potential scams using behavioral analysis.</p>
+                    </div>
+                </极>
+            </div>
+        </section>
+
+        <!-- Technical Specifications -->
+        <section id="tech" class="mb-16 scroll-mt-20">
+            <div class="flex items-center mb-8">
+                <div class="h-1 bg-indigo-500 rounded-full w-12 mr-4"></div>
+                <h2 class="text-3xl font-bold text-gray-800">4. Technical Specifications</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div>
+                    <h3 class="text-2xl font-semib极 mb-6 text-gray-700">4.1 Tech Stack</h3>
+                    
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Component</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray极 uppercase tracking-wider">Technology</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Frontend</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Flutter (Mobile), React.js (Web)</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Backend</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Node.js + Firebase</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">AI/ML</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Python, TensorFlow, Dialogflow</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Payments</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Stitch API (M-Pesa)</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">USSD/SMS</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Africa's Talking API</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 text-gray-700">4.2 Data Flow</h3>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <div class="flex flex-col items-center">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-indigo-100 rounded-full p-3 mr-4">
+                                    <i class="fas fa-user text-indigo-600"></i>
+                                </div>
+                                <div class="text-sm font-medium">Client Posts Job</div>
+                                <div class="mx-4 text-gray-400">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                                <div class="bg-purple-100 rounded-full p-3">
+                                    <i class="fas fa-robot text-purple-600"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center mb-4">
+                                <div class="bg-purple-100 rounded-full p-3 mr-4">
+                                    <i class="fas fa-robot text-purple-600"></i>
+                                </div>
+                                <div class="text-sm font-medium">AI Matches Workers</div>
+                                <div class="mx-4 text-gray-400">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                                <div class="bg-blue-100 rounded-full p-3">
+                                    <i class="fas fa-user-tie text-blue-600"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-100 rounded-full p-3 mr-4">
+                                    <i class="fas fa-user-tie text-blue-600"></i>
+                                </div>
+                                <div class="text-sm font-medium">Worker Accepts</div>
+                                <div class="mx-4 text-gray-400">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                                <div class="bg-green-100 rounded-full p-3">
+                                    <i class="fas fa-money-bill-wave text-green-600"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center mb-4">
+                                <div class="bg-green-100 rounded-full p-3 mr-4">
+                                    <i class="fas fa-money-bill-wave text-green-600"></i>
+                                </div>
+                                <div class="text-sm font-medium">M-Pesa Escrow</div>
+                                <极 class="mx-4 text-gray-400">
+                                    <i class="fas fa-arrow-right"></i>
+                                </极>
+                                <div class="bg-yellow-100 rounded-full p-3">
+                                    <i class="fas fa-check-circle text-yellow-600"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="bg-yellow-100 rounded-full p-3 mr-4">
+                                    <i class="fas fa-check-circle text-yellow-600"></i>
+                                </div>
+                                <div class="text-sm font-medium">Job Completion</div>
+                                <div class="mx-4 text-gray-400">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                                <div class="bg-red-100 rounded-full p-3">
+                                    <i class="fas fa-unlock text-red-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
+                <h3 class="text-xl font-semibold mb-4 text-indigo-800">API Integrations</h3>
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-lg p-4 flex items-center">
+                        <img src="https://via.placeholder.com/40x40" alt="M-Pesa" class="h-10 w-10 mr-3">
+                        <div>
+                            <div class="font-medium">M-Pesa API</div>
+                            <div class="text-xs text-gray-500">Payment processing</div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 flex items-center">
+                        <img src="https://via.placeholder.com/40x40" alt="Africa's Talking" class="h-10 w-10 mr-3">
+                        <div>
+                            <div class="font-medium">Africa's Talking</div>
+                            <div class="text-xs text-gray-500">USSD/SMS gateway</div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 flex items-center">
+                        <img src="https://via.placeholder.com/40x40" alt="Jumio" class="h-10 w-10 mr-3">
+                        <div>
+                            <div class="font-medium">Jumio</div>
+                            <div class="text-xs text-gray-500">ID verification</div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 flex items-center">
+                        <img src="https://via.placeholder.com/40x40" alt="Google Maps" class="h-10 w-10 mr-3">
+                        <div>
+                            <div class="font-medium">Google Maps</div>
+                            <div class="text-xs text-gray-500">Location services</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business & Monetization -->
+        <section id="business" class="mb-16 scroll-mt-20">
+            <div class="flex items-center mb-8">
+                <div class="h-1 bg-indigo-500 rounded-full w-12 mr-4"></div>
+                <h2 class="text-3xl font-bold text-gray-800">5. Business & Monetization</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 text-gray-700">5.1 Revenue Streams</h3>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <div class="flex items-start mb-6">
+                            <div class="bg-indigo-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-percentage text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-1">Transaction Commission</h4>
+                                <p class="text-gray-600">10-20% per completed job transaction</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start mb-6">
+                            <div class="bg-green-100 p-3 rounded-lg mr极">
+                                <i class="fas fa-crown text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-1">Premium Subscriptions</h4>
+                                <p class="text-gray-600">KES 500/month for enhanced worker profiles</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-building text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-1">B2B Services</h4>
+                                <p class="text-gray-600">Corporate maintenance contracts</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 text-gray-700">5.2 Cost Structure</h3>
+                    
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monthly Cost (USD)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">AI APIs (Jumio, Dialogflow)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$300</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">USSD/SMS (Africa's Talking)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$200</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Cloud Hosting (AWS)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$150</td>
+                                </tr>
+                                <tr>
+                                    <td class="px极 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Marketing (Facebook Ads)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$500</td>
+                                </tr>
+                                <tr class="bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Total</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">$1,150</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Financial Projections</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray极">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Metric</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Month 1</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Month 6</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Month 12</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Active Workers</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">500</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5,000</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10,000</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Monthly Jobs</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">200</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2,500</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5,000</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Revenue (KES)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">50,000</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">250,000</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">500,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap & Milestones -->
+        <section id="roadmap" class="mb-16 scroll-mt-20">
+            <div class="flex items-center mb-8">
+                <div class="h-1 bg-indigo-500 rounded-full w-12 mr-4"></div>
+                <h2 class="text-3xl font-bold text-gray-800">6. Roadmap & Milestones</h2>
+            </div>
+            
+            <div class="relative">
+                <div class="absolute left-4 h-full w-0.5 bg-gray-200"></div>
+                
+                <div class="space-y-8 pl-12">
+                    <div class="relative">
+                        <div class="absolute -left-12 top-0 h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center text-white">
+                            <span>Q1</span>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <h3 class="text-xl font-semibold mb-2">MVP Launch</h3>
+                            <p class="text-gray-600 mb-4">WhatsApp integration + basic no-code platform</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Core Features</span>
+                                <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">WhatsApp</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute -left-12 top-0 h-8 w-8 rounded-full bg-green-500 flex items-center justify-center text-white">
+                            <span>Q2</span>
+                        </div>
+                        <极 class="bg-white rounded-xl shadow-md p-6">
+                            <h3 class="text-xl font-semibold mb-2">AI Matching + Payments</h3>
+                            <p class="text-gray-600 mb-4">Implement AI matching engine and M-Pesa escrow</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full">AI Engine</span>
+                                <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Payments</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute -left-12 top-0 h-8 w-8 rounded-full bg-purple-500 flex items-center justify-center text-white">
+                            <span>Q3</span>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <h3 class="text-xl font-semibold mb-2">USSD Integration</h3>
+                            <p class="text-gray-600 mb-4">Expand to feature phone users with USSD/SMS</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">USSD</span>
+                                <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">SMS</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute -left-12 top-0 h-8 w-8 rounded-full bg-yellow-500 flex items-center justify-center text-white">
+                            <span>Q4</span>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <h3 class="text-xl font-semibold mb-2">Seed Round</h3>
+                            <p class="text-gray-600 mb-4">Raise $250K seed funding for expansion</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-pink-100 text-pink-800 text-xs px-3 py-1 rounded-full">Funding</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Growth</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Metrics -->
+        <section id="metrics" class="mb-16 scroll-mt-20">
+            <div class="flex items-center mb-8">
+                <div class="h-1 bg-indigo-500 rounded-full w-12 mr-4"></div>
+                <h2 class="text-3xl font-bold text-gray-800">7. Success Metrics</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <div class="bg-white rounded-xl shadow-md p-6 h-full">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Key Performance Indicators</h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Active Workers</span>
+                                    <span class="text-sm font-medium text-indigo-600">10,000+</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Completed Jobs</span>
+                                    <span class="text-sm font-medium text-green-600">5,000+</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-green-600 h极 rounded-full" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Revenue (KES)</span>
+                                    <span class="text-sm font-medium text-purple-600">5M+</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-purple-600 h-2.5 rounded-full" style="width: 20%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Retention Rate</span>
+                                    <span class="text-sm font-medium text-blue-600">40%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 35%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="bg-white rounded-xl shadow-md p-6 h-full">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">User Engagement Metrics</h3>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-indigo-50 rounded-lg p-4 text-center">
+                                <div class="text-3xl font-bold text-indigo-600 mb-1">75%</div>
+                                <div class="text-sm text-gray-600">Profile Completion</div>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4 text-center">
+                                <div class="text-3xl font-bold text-green-600 mb-1">2.8</div>
+                                <div class="text-sm text-gray-600">Avg. Jobs/Worker</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 text-center">
+                                <div class="text-3xl font-bold text-purple-600 mb-1">4.5★</div>
+                                <div class="text-sm text-gray-600">Avg. Rating</div>
+                            </div>
+                            <div class="bg-yellow-50 rounded-lg p-4 text-center">
+                                <div class="text-3xl font-bold text-yellow-600 mb-1">3.2</div>
+                                <div class="text-sm text-gray-600">Days to Completion</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risks & Mitigation -->
+        <section id="risks" class="mb-16 scroll-mt-20">
+            <div class="flex items-center mb-8">
+                <div class="h-1 bg-indigo-500 rounded-full w-12 mr-4"></div>
+                <h2 class="text-3xl font-bold text-gray-800">8. Risks & Mitigation</h2>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Risk</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Impact</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Likelihood</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mitigation Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Low Trust in Online Hiring</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">High</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Medium</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">ID Verification + Escrow Payments</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Worker Drop-off</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Medium</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">High</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Gamification (Top-rated badges)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Payment Fraud</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-极">High</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Low</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">AI Fraud Detection System</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Regulatory Changes</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Medium</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Low</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Legal counsel + flexible architecture</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Appendices -->
+        <section class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="h-1 bg-indigo-500 rounded-full w-12 mr-4"></div>
+                <h2 class="text-3xl font-bold text-gray-800">9. Appendices</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <a href="#" class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <div class="text-indigo-500 mb-4">
+                        <i class="fas fa-mobile-screen text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">User Flow Mockups</h3>
+                    <p class="text-gray-600">Interactive Figma prototypes showing key user journeys.</p>
+                </a>
+                
+                <a href="#" class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <div class="text-green-500 mb-4">
+                        <i class="fas fa-chart-bar text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Competitor Analysis</h3>
+                    <p class="text-gray-600">Detailed comparison with Ajira and other market players.</p>
+                </a>
+                
+                <a href="#" class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <div class="text-purple-500 mb-4">
+                        <i class="fas fa-brain text-3xl"></极>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">AI Model Specifications</h3>
+                    <p class="text-gray-600">GitHub repository with matching algorithm documentation.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Approval -->
+        <section class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="h-1 bg-indigo-500 rounded-full w-12 mr-4"></div>
+                <h2 class="text-3xl font-bold text-gray-800">Approval</h2>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Signature</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Product Owner</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">[Your Name]</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-indigo-600 hover:text-indigo-900">Add Signature</button>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" id="approval-date"></td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">CTO</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">[Name]</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-indigo-600 hover:text-indigo-900">Add Signature</button>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Investor</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">[Name]</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-indigo-600 hover:text-indigo-900">Add Signature</button>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Next Steps -->
+        <section class="gradient-bg rounded-2xl p-8 text-white">
+            <h2 class="text-3xl font-bold mb-6">🚀 Next Steps</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                    <div class="text-2xl mb-3">1</div>
+                    <h3 class="text-xl font-semibold mb-2">Share PRD</h3>
+                    <p>Review with development team for MVP scoping.</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                    <div class="text-2xl mb-3">2</div>
+                    <h3 class="text-xl font-semibold mb-2">User Testing</h3>
+                    <p>Conduct testing with 50 workers/clients.</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                    <div class="text-2xl mb-3">3</div>
+                    <h3 class="text-xl font-semibold mb-2">Secure Partnerships</h3>
+                    <p>Engage NITA, Safaricom for collaborations.</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <p class="text-xl mb-6">Need revisions? Let's refine! 🔍✨</p>
+                <button class="bg-white text-indigo-600 font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors">
+                    Request Changes
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <div class="bg-white rounded-lg p-2 mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="极 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold">KaziKonect</h2>
+                            <p class="text-gray-400">AI-Powered Skilled Labor Marketplace</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2024 KaziKonect. All rights reserved.</p>
+                <p class="mt-2">Product Requirements Document v1.0</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current date
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', options);
+        document.getElementById('approval-date').textContent = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        
+        // Toggle feature content
+        function toggleFeature(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(`${id}-icon`);
+            
+            content.classList.toggle('expanded');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+        
+        // Highlight active nav item
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-pill');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active', 'text-indigo-600');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active', 'text-indigo-600');
+                }
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Update URL without page reload
+                history.pushState(null, null, targetId);
+            });
+        });
+    </script>
+</body>
+</html>
